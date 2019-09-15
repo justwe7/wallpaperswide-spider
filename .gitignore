@@ -1,2 +1,4 @@
 node_modules/
-/picture
+/picture/*.jpg
+/picture/*.png
+/picture/*.zip
