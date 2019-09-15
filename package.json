@@ -1,0 +1,27 @@
+{
+  "name": "wallpaperswide-spider",
+  "version": "1.0.0",
+  "description": "壁纸爬虫",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justwe7/wallpaperswide-spider.git"
+  },
+  "author": "huaxi.li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justwe7/wallpaperswide-spider/issues"
+  },
+  "homepage": "https://github.com/justwe7/wallpaperswide-spider#readme",
+  "devDependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "superagent": "^5.1.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "qs": "^6.8.0"
+  }
+}
