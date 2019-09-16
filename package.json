@@ -18,6 +18,7 @@
   "homepage": "https://github.com/justwe7/wallpaperswide-spider#readme",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "cli-spinner": "^0.2.10",
     "superagent": "^5.1.0"
   },
   "dependencies": {

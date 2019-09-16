@@ -4,6 +4,10 @@ const Axios = require('axios')
 const Qs = require('qs')
 const fs = require('fs')
 const path = require('path')
+const Spinner = require('cli-spinner').Spinner
+/* var spinner = new Spinner('processing.. %s');
+spinner.setSpinnerString('|/-\\');
+spinner.start(); */
 
 /* superagent
   .get('https://wall.alphacoders.com/by_sub_category.php')
@@ -46,7 +50,7 @@ async function parsePage(con) {
   let axiosTask = []
   // 找到目标数据所在的页面元素，获取数据
   $('span.download-button').each(async (idx, el) => {
-    if (idx > 10) {
+    if (idx > 3) {
       return false
     }
     const $node = $(el)
@@ -62,13 +66,14 @@ async function parsePage(con) {
   })
   // downloadFile
   return Promise.all(axiosTask).then(res => {
-    return new Promise(async (resolve) => {
+    console.log(res)
+    return new Promise(async resolve => {
+      let n = 0
       await Promise.all(res.map(v => downloadFile(v)))
       resolve(axiosTask.length)
     })
   })
 }
-
 
 async function httpGetImgUri(data) {
   // https://wall.alphacoders.com/get_download_link.php
@@ -102,7 +107,17 @@ async function downloadFile(url, filepath = 'picture') {
   if (!fs.existsSync(filepath)) {
     fs.mkdirSync(filepath)
   }
-  const mypath = path.resolve(filepath, `${url.match('[^/]+(?!.*/)')[0]}.jpg`)
+  // const mypath = path.resolve(filepath, `${url.match('[^/]+(?!.*/)')[0]}.jpg`)
+  const mypath = path.resolve(
+    filepath,
+    `${
+      url.match(
+        '[^https://initiate.alphacoders.com/download/wallpaper/]+(\\d)'
+      )[0]
+    }.jpg`
+  )
+  console.log(url)
+  // return false;
   const writer = fs.createWriteStream(mypath)
   const response = await Axios({
     url,
@@ -112,7 +127,9 @@ async function downloadFile(url, filepath = 'picture') {
 
   response.data.pipe(writer)
   return new Promise((resolve, reject) => {
-    writer.on('finish', resolve)
+    writer.on('finish', () => {
+      resolve()
+    })
     writer.on('error', reject)
   })
 }
